@@ -1,0 +1,11 @@
+base_url: "https://opensource-demo.orangehrmlive.com"
+browser: "chrome"           # chrome or firefox
+headless: false             # true = no browser window
+
+credentials:
+  username: "Admin"
+  password: "admin123"
+
+timeouts:
+  implicit: 10              # seconds to wait for elements
+  page_load: 30
