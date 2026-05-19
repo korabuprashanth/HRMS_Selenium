@@ -17,7 +17,7 @@ class DashboardPage(BasePage):
 
     def is_loaded(self):
         """Confirm Dashboard page is fully loaded."""
-        return self.is_visible(self.DASHBOARD_HEADER)
+        return self.is_visible(self.DASHBOARD_HEADER) # check for unique element on dashboard to confirm page is loaded
 
     def get_page_heading(self):
         return self.get_text(self.DASHBOARD_HEADER)

@@ -25,7 +25,7 @@ class BasePage:
         self.log.info(f"Click → {locator}")
         self._wait().until(EC.element_to_be_clickable(locator)).click()
 
-    def enter_text(self, locator, text):
+    def enter_text(self, locator, text): 
         """Clear the field and type text."""
         self.log.info(f"Type '{text}' → {locator}")
         element = self._wait().until(EC.visibility_of_element_located(locator))
@@ -34,13 +34,13 @@ class BasePage:
 
     def get_text(self, locator):
         """Return the visible text of an element."""
-        element = self._wait().until(EC.visibility_of_element_located(locator))
+        element = self._wait().until(EC.visibility_of_element_located(locator))# wait for element to be visible, then return its text
         return element.text
 
     def is_visible(self, locator):
         """Return True if element is visible, False otherwise."""
         try:
-            self._wait().until(EC.visibility_of_element_located(locator))
+            self._wait().until(EC.visibility_of_element_located(locator))# if element becomes visible within timeout, return True
             return True
         except Exception:
             return False
