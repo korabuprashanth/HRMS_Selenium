@@ -13,7 +13,6 @@ class TestLogin:
 
     def test_valid_login(self, login_page, config):
         """Valid credentials should land on Dashboard."""
-        login_page.open(config["base_url"])
         login_page.login(
             config["credentials"]["username"],
             config["credentials"]["password"]
@@ -23,7 +22,6 @@ class TestLogin:
 
     def test_invalid_password(self, login_page, config):
         """Wrong password should show an error message."""
-        login_page.open(config["base_url"])
         login_page.login(config["credentials"]["username"], "wrongpassword")
 
         error = login_page.get_error_message()
@@ -32,7 +30,6 @@ class TestLogin:
 
     def test_empty_username(self, login_page, config):
         """Submitting blank username should show a validation error."""
-        login_page.open(config["base_url"])
         login_page.login("", config["credentials"]["password"])
 
         # OrangeHRM shows "Required" on blank fields
@@ -41,6 +38,5 @@ class TestLogin:
 
     def test_page_title(self, login_page, config):
         """Page title must contain 'OrangeHRM'."""
-        login_page.open(config["base_url"])
         title = login_page.get_title()
         assert "OrangeHRM" in title, f"Unexpected title: '{title}'"

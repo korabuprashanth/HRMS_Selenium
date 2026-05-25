@@ -17,7 +17,7 @@ class TestDashboard:
         heading = logged_in.get_page_heading()
         assert heading == "Dashboard", f"Unexpected heading: '{heading}'"
 
-    def test_logout(self, logged_in, login_page, config):
+    def test_logout(self, logged_in, login_page):
         """Logout should redirect back to Login page."""
         logged_in.logout()
         # After logout the login page should appear

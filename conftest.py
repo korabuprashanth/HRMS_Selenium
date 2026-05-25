@@ -32,7 +32,7 @@ def driver(config):
     Change scope to 'class' or 'module' if you want to share a browser.
     """
     browser   = config.get("browser", "chrome").lower()    # default to Chrome if not specified
-    headless  = config.get("headless", False)
+    headless  = config.get("headless", False) # default to False if not specified
 
     if browser == "firefox":
         opts = FirefoxOptions()
@@ -56,9 +56,16 @@ def driver(config):
     drv.quit()         # always close browser after test finishes
 
 
+@pytest.fixture(scope="function", autouse=True)
+def open_login_page(driver, config):
+    """Start every test from the Login page so tests don't repeat page navigation."""
+    driver.get(f"{config['base_url']}/web/index.php/auth/login")
+    yield
+
+
 @pytest.fixture(scope="function")
 def login_page(driver):
-    """Return a LoginPage object."""
+    """Return a LoginPage object already on the login screen."""
     return LoginPage(driver)
 
 
@@ -69,15 +76,13 @@ def dashboard(driver):
 
 
 @pytest.fixture(scope="function")
-def logged_in(driver, config):
+def logged_in(login_page, config):
     """
-    Open the app, perform login, and return DashboardPage.
-    Use this fixture in any test that needs to START from the dashboard.
+    Use the open login page, perform login, and return DashboardPage.
+    This fixture keeps dashboard tests concise and DRY.
     """
-    page = LoginPage(driver)
-    page.open(config["base_url"])
-    page.login(
+    login_page.login(
         config["credentials"]["username"],
         config["credentials"]["password"]
     )
-    return DashboardPage(driver)
+    return DashboardPage(login_page.driver)
