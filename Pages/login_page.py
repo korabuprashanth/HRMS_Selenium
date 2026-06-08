@@ -18,7 +18,7 @@ class LoginPage(BasePage):
     # ── Actions ──────────────────────────────────────────────────
 
     def open(self, base_url):
-        """Navigate to the login page."""
+        """Navigate to the login page. This can be used from calling it otherpages & when want to navigte"""
         self.driver.get(f"{base_url}/web/index.php/auth/login")
         self.log.info("Opened Login Page")
 

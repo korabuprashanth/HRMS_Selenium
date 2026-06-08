@@ -60,19 +60,19 @@ def driver(config):
 def open_login_page(driver, config):
     """Start every test from the Login page so tests don't repeat page navigation."""
     driver.get(f"{config['base_url']}/web/index.php/auth/login")
-    yield
+    yield # test runs here, with browser already on login page
 
 
 @pytest.fixture(scope="function")
 def login_page(driver):
     """Return a LoginPage object already on the login screen."""
-    return LoginPage(driver)
+    return LoginPage(driver)                           #login_page.driver=driver
 
 
 @pytest.fixture(scope="function")
 def dashboard(driver):
     """Return a DashboardPage object."""
-    return DashboardPage(driver)
+    return DashboardPage(driver) 
 
 
 @pytest.fixture(scope="function")
@@ -85,4 +85,4 @@ def logged_in(login_page, config):
         config["credentials"]["username"],
         config["credentials"]["password"]
     )
-    return DashboardPage(login_page.driver)
+    return DashboardPage(login_page.driver)          #dashboard.driver = login_page.driver =driver(both point to same browser)
